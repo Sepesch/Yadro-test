@@ -1,0 +1,7 @@
+services:
+  yadro-app:
+    build: .
+    container_name: yadro-app
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

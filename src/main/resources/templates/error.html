@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ошибка</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+<div class="error-container">
+    <div class="status-code" th:text="${status}">500</div>
+    <div class="message" th:text="${message}">Что-то пошло не так</div>
+    <div class="details" th:text="${details}">Подробности...</div>
+    <a href="/homepage">Вернуться на главную</a>
+</div>
+</body>
+</html>

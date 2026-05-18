@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${random} ? 'Случайный человек' : 'Карточка человека'">Карточка человека</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+<div class="card">
+    <div class="card-header">
+        <h1 th:text="${random} ? 'Случайный человек' : 'Информация о человеке'"></h1>
+        <div class="badge" th:if="${random}">обновляется при каждом запросе</div>
+    </div>
+    <div class="card-body">
+        <div th:if="${person}">
+            <div class="info-grid">
+                <div class="info-label">ID:</div>
+                <div class="info-value" th:text="${person.id}"></div>
+                <div class="info-label">Пол:</div>
+                <div class="info-value" th:text="${person.gender}"></div>
+                <div class="info-label">Имя:</div>
+                <div class="info-value" th:text="${person.firstName}"></div>
+                <div class="info-label">Фамилия:</div>
+                <div class="info-value" th:text="${person.lastName}"></div>
+                <div class="info-label">Телефон:</div>
+                <div class="info-value" th:text="${person.phone}"></div>
+                <div class="info-label">Email:</div>
+                <div class="info-value" th:text="${person.email}"></div>
+                <div class="info-label">Город:</div>
+                <div class="info-value" th:text="${person.city}"></div>
+                <div class="info-label">Место проживания:</div>
+                <div class="info-value" th:text="${person.address}"></div>
+            </div>
+        </div>
+        <div th:unless="${person}">
+            <p style="color:#b91c1c;">Человек не найден.</p>
+        </div>
+        <div class="actions">
+            <a href="/homepage" class="btn">На главную</a>
+            <a th:if="${random}" href="/random" class="btn btn-primary">Другой случайный</a>
+            <a th:unless="${random}" th:href="@{/random}" class="btn">Случайный человек</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>База данных людей</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="action-bar">
+        <div class="load-card">
+            <form action="/load" method="post" style="display: flex; gap: 12px; align-items: flex-end;">
+                <div>
+                    <label>Загрузить ещё:</label><br>
+                    <input type="number" name="count" min="1" max="5000" value="50" required>
+                </div>
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+        <a href="/random" class="random-btn">Случайный человек →</a>
+    </div>
+
+    <h2>Список людей в базе</h2>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Пол</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Телефон</th>
+                    <th>Email</th>
+                    <th>Город</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="person : ${persons.content}">
+                    <td th:text="${person.gender}">—</td>
+                    <td th:text="${person.firstName}">—</td>
+                    <td th:text="${person.lastName}">—</td>
+                    <td th:text="${person.phone}">—</td>
+                    <td th:text="${person.email}">—</td>
+                    <td th:text="${person.city}">—</td>
+                    <td><a class="details-link" th:href="@{/{id}(id=${person.id})}">карточка</a></td>
+                </tr>
+                <tr th:if="${persons.empty}">
+                    <td colspan="7" class="empty-row">База пуста. Нажмите «Загрузить».</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination" th:if="${persons.totalPages > 0}">
+        <span th:if="${persons.hasPrevious()}">
+            <a th:href="@{/(page=0)}">Первая</a>
+            <a th:href="@{/(page=${persons.number - 1})}">Пред.</a>
+        </span>
+        <span th:each="i: ${#numbers.sequence(0, persons.totalPages - 1)}">
+            <a th:if="${i == persons.number}" th:text="${i+1}" class="current"></a>
+            <a th:unless="${i == persons.number}" th:href="@{/(page=${i})}" th:text="${i+1}"></a>
+        </span>
+        <span th:if="${persons.hasNext()}">
+            <a th:href="@{/(page=${persons.number + 1})}">След.</a>
+            <a th:href="@{/(page=${persons.totalPages - 1})}">Последняя</a>
+        </span>
+    </div>
+
+    <footer>
+        Всего записей: <span th:text="${persons.totalElements}">0</span>
+    </footer>
+</div>
+</body>
+</html>
